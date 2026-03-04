@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import (
 )
 
 DATABASE_URL = "postgresql+asyncpg://admin:admin@db:5432/pokemon_db"
-engine = create_async_engine(DATABASE_URL)
+engine = create_async_engine(DATABASE_URL, echo=True)
 
 AsyncSessionLocal = async_sessionmaker(
     bind=engine,

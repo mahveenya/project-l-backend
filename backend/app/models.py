@@ -8,8 +8,6 @@ class Pokemon(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String, unique=True, nullable=False)
-    height: Mapped[int] = mapped_column(Integer, nullable=False)
-    weight: Mapped[int] = mapped_column(Integer, nullable=False)
 
     abilities = relationship(
         "Ability",
