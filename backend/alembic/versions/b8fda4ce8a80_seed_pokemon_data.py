@@ -29,8 +29,12 @@ def upgrade() -> None:
             "name": "overgrow",
             "effect_entries": [
                 {
-                    "effect": "Powers up Grass-type moves when the Pokémon's HP is low.",
-                    "language": {"name": "en"},
+                    "effect": "When this Pokémon has 1/3 or less of its HP remaining, its grass-type moves inflict 1.5× as much regular damage.",
+                    "short_effect": "Strengthens grass moves to inflict 1.5× damage at 1/3 max HP or less.",
+                    "language": {
+                        "name": "en",
+                        "url": "https://pokeapi.co/api/v2/language/9/",
+                    },
                 }
             ],
         },
@@ -38,8 +42,12 @@ def upgrade() -> None:
             "name": "blaze",
             "effect_entries": [
                 {
-                    "effect": "Powers up Fire-type moves when the Pokémon's HP is low.",
-                    "language": {"name": "en"},
+                    "effect": "When this Pokémon has 1/3 or less of its HP remaining, its fire-type moves inflict 1.5× as much regular damage.",
+                    "short_effect": "Strengthens fire moves to inflict 1.5× damage at 1/3 max HP or less.",
+                    "language": {
+                        "name": "en",
+                        "url": "https://pokeapi.co/api/v2/language/9/",
+                    },
                 }
             ],
         },
@@ -47,8 +55,12 @@ def upgrade() -> None:
             "name": "torrent",
             "effect_entries": [
                 {
-                    "effect": "Powers up Water-type moves when the Pokémon's HP is low.",
-                    "language": {"name": "en"},
+                    "effect": "When this Pokémon has 1/3 or less of its HP remaining, its water-type moves inflict 1.5× as much regular damage.",
+                    "short_effect": "Strengthens water moves to inflict 1.5× damage at 1/3 max HP or less.",
+                    "language": {
+                        "name": "en",
+                        "url": "https://pokeapi.co/api/v2/language/9/",
+                    },
                 }
             ],
         },
@@ -56,8 +68,12 @@ def upgrade() -> None:
             "name": "chlorophyll",
             "effect_entries": [
                 {
-                    "effect": "Doubles Speed during strong sunlight.",
-                    "language": {"name": "en"},
+                    "effect": "This Pokémon's Speed is doubled during strong sunlight.",
+                    "short_effect": "Doubles Speed during strong sunlight.",
+                    "language": {
+                        "name": "en",
+                        "url": "https://pokeapi.co/api/v2/language/9/",
+                    },
                 }
             ],
         },
@@ -113,7 +129,6 @@ def downgrade() -> None:
     op.execute(
         sa.text(
             """
-            DELETE FROM pokemon_ability WHERE pokemon_id IN (1, 2, 3, 4);
             DELETE FROM pokemon WHERE name IN ('bulbasaur', 'charmander', 'squirtle', 'venusaur');
             DELETE FROM ability WHERE name IN ('overgrow', 'blaze', 'torrent', 'chlorophyll');
         """
