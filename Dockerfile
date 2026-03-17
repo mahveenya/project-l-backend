@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-WORKDIR /backend
+WORKDIR /app
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -21,7 +21,7 @@ RUN apt-get update \
 COPY pyproject.toml uv.lock ./
 RUN pip install uv && uv sync --frozen
 
-ENV PATH="/backend/.venv/bin:$PATH"
+ENV PATH="/app/.venv/bin:$PATH"
 
 COPY . .
 

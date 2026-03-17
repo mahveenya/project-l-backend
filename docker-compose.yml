@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql
 
   backend:
-    build: ./backend
+    build: .
     depends_on:
       - db
     environment:
@@ -22,8 +22,8 @@ services:
       - "8000:8000"
     volumes:
       - type: bind
-        source: ./backend/alembic
-        target: /backend/alembic
+        source: ./alembic
+        target: /app/alembic
 
 volumes:
   postgres_data:
