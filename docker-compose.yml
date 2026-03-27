@@ -1,3 +1,4 @@
+name: pokemon-api
 services:
   db:
     image: postgres:18
@@ -11,11 +12,28 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "admin", "-d", "pokemon_db"]
+      interval: 5s
+      retries: 5
+
+  db-seed:
+    image: postgres:18
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app/db/seed.sql:/seed.sql
+    entrypoint:
+      ["psql", "-h", "db", "-U", "admin", "-d", "pokemon_db", "-f", "/seed.sql"]
+    environment:
+      PGPASSWORD: admin
 
   backend:
     build: .
     depends_on:
-      - db
+      db-seed:
+        condition: service_completed_successfully
     environment:
       DATABASE_URL: postgresql+asyncpg://admin:admin@db:5432/pokemon_db
     ports:
