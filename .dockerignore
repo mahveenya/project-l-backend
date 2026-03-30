@@ -1,7 +1,16 @@
-backend/.venv
+.venv
+.ruff_cache
 __pycache__
 *.pyc
 *.pyo
 *.pyd
 *.swp
 .env
+.git
+.github
+.gitignore
+.pre-commit-config.yaml
+__init__.py
+Makefile
+README.md
+docker-compose.yml
