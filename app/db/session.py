@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import (
-    create_async_engine,
-    async_sessionmaker,
     AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
 )
 
 DATABASE_URL = "postgresql+asyncpg://admin:admin@db:5432/pokemon_db"

@@ -1,5 +1,5 @@
-from app.schemas.common import LanguageSchema
 from app.schemas.base_schema import BaseSchema
+from app.schemas.common import LanguageSchema
 
 
 class EffectSchema(BaseSchema):

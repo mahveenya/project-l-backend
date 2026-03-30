@@ -7,7 +7,6 @@ from app.schemas.pokemon_schema import PokemonListSchema, PokemonSchema
 from app.services.ability_service import get_ability_by_id
 from app.services.pokemon_service import get_pokemon_by_id, get_pokemons_list
 
-
 app = FastAPI()
 
 

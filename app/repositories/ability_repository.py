@@ -1,4 +1,5 @@
 from sqlalchemy import select
+
 from app.db.models.ability_model import AbilityModel
 from app.db.models.pokemon_ability_model import PokemonAbilityModel
 

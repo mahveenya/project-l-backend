@@ -13,4 +13,4 @@ class PokemonListSchema(BaseSchema):
     count: int
     next: str | None
     previous: str | None
-    results: list[NamedAPIResourceSchema] = []
+    results: list[NamedAPIResourceSchema] = []  # noqa: RUF012

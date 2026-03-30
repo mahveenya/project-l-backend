@@ -9,7 +9,6 @@ from app.schemas.common import NamedAPIResourceSchema
 from app.schemas.pokemon_schema import PokemonListSchema, PokemonSchema
 from app.utils.pagination import build_pagination
 
-
 BASE_URL = "/pokemon"
 
 
