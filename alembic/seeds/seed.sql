@@ -2,10 +2,10 @@ BEGIN;
 
 -- Seed abilities
 INSERT INTO ability (name, effect_entries) VALUES
-('overgrow', $$[{"effect":"When this Pokémon has 1/3 or less of its HP remaining, its grass-type moves inflict 1.5× as much regular damage.","short_effect":"Strengthens grass moves to inflict 1.5× damage at 1/3 max HP or less.","language":{"name":"en","url":"https://pokeapi.co/api/v2/language/9/"}}]$$::json),
-('blaze', $$[{"effect":"When this Pokémon has 1/3 or less of its HP remaining, its fire-type moves inflict 1.5× as much regular damage.","short_effect":"Strengthens fire moves to inflict 1.5× damage at 1/3 max HP or less.","language":{"name":"en","url":"https://pokeapi.co/api/v2/language/9/"}}]$$::json),
-('torrent', $$[{"effect":"When this Pokémon has 1/3 or less of its HP remaining, its water-type moves inflict 1.5× as much regular damage.","short_effect":"Strengthens water moves to inflict 1.5× damage at 1/3 max HP or less.","language":{"name":"en","url":"https://pokeapi.co/api/v2/language/9/"}}]$$::json),
-('chlorophyll', $$[{"effect":"This Pokémon's Speed is doubled during strong sunlight.","short_effect":"Doubles Speed during strong sunlight.","language":{"name":"en","url":"https://pokeapi.co/api/v2/language/9/"}}]$$::json)
+('overgrow', $$[{"effect":"When this Pokémon has 1/3 or less of its HP remaining, its grass-type moves inflict 1.5× as much regular damage.","short_effect":"Strengthens grass moves to inflict 1.5× damage at 1/3 max HP or less.","language":{"name":"en"}}]$$::json),
+('blaze', $$[{"effect":"When this Pokémon has 1/3 or less of its HP remaining, its fire-type moves inflict 1.5× as much regular damage.","short_effect":"Strengthens fire moves to inflict 1.5× damage at 1/3 max HP or less.","language":{"name":"en"}}]$$::json),
+('torrent', $$[{"effect":"When this Pokémon has 1/3 or less of its HP remaining, its water-type moves inflict 1.5× as much regular damage.","short_effect":"Strengthens water moves to inflict 1.5× damage at 1/3 max HP or less.","language":{"name":"en"}}]$$::json),
+('chlorophyll', $$[{"effect":"This Pokémon's Speed is doubled during strong sunlight.","short_effect":"Doubles Speed during strong sunlight.","language":{"name":"en"}}]$$::json)
 ON CONFLICT (name) DO NOTHING;
 
 -- Seed pokemon
