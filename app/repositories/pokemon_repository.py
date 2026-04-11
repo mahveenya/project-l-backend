@@ -4,7 +4,7 @@ from app.db.models import PokemonModel
 
 
 async def get_pokemon_db_models(session, offset, limit):
-    stmt = select(PokemonModel).offset(offset).limit(limit)
+    stmt = select(PokemonModel).order_by(PokemonModel.id).offset(offset).limit(limit)
     result = await session.execute(stmt)
     return result.scalars().all()
 
