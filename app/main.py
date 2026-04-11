@@ -6,7 +6,7 @@ from app.db.session import get_session
 from app.schemas.ability_schema import AbilitySchema
 from app.schemas.pokemon_schema import PokemonListSchema, PokemonSchema
 from app.services.ability_service import get_ability_by_id
-from app.services.pokemon_service import get_pokemon_by_id, get_pokemons_list
+from app.services.pokemon_service import get_pokemon_by_id, get_pokemon_list
 
 app = FastAPI()
 
@@ -16,13 +16,13 @@ async def health_check():
     return {"status": "ok"}
 
 
-@app.get(Endpoints.POKEMONS_LIST, response_model=PokemonListSchema)
+@app.get(Endpoints.POKEMON_LIST, response_model=PokemonListSchema)
 async def list_pokemons(
     offset: int = 0,
     limit: int = 20,
     session=Depends(get_session),
 ) -> PokemonListSchema:
-    return await get_pokemons_list(session, offset, limit)
+    return await get_pokemon_list(session, offset, limit)
 
 
 @app.get(

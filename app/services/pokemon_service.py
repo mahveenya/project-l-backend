@@ -14,7 +14,7 @@ from app.schemas.pokemon_schema import (
 from app.utils.pagination import build_pagination
 
 
-async def get_pokemons_list(session, offset, limit) -> PokemonListSchema:
+async def get_pokemon_list(session, offset, limit) -> PokemonListSchema:
     pokemons = await get_pokemon_db_models(session, offset, limit)
     if not pokemons:
         return PokemonListSchema(count=0, next=None, previous=None, results=[])
@@ -24,7 +24,7 @@ async def get_pokemons_list(session, offset, limit) -> PokemonListSchema:
     results = [PokemonNamedAPIResourceSchema.from_model(p) for p in pokemons]
 
     next_url, previous_url = build_pagination(
-        Endpoints.POKEMONS_LIST, total, offset, limit
+        Endpoints.POKEMON_LIST, total, offset, limit
     )
 
     return PokemonListSchema(
