@@ -9,7 +9,7 @@ router = APIRouter(prefix=Endpoints.ABILITY_BASE, tags=["ability"])
 
 
 @router.get(
-    Endpoints.ABILITY_DETAIL,
+    "/{id_or_name}",
     response_model=AbilitySchema,
     responses={
         404: {"description": "Ability not found"},
