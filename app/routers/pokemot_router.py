@@ -1,20 +1,21 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 from app.constants import Endpoints
 from app.db.session import get_session
 from app.schemas.pokemon_schema import PokemonListSchema, PokemonSchema
 from app.services.pokemon_service import get_pokemon_by_id, get_pokemon_list
 
-router = APIRouter(prefix=Endpoints.POKEMON_BASE, tags=["pokemon"])
+router = APIRouter(prefix=Endpoints.POKEMON, tags=["pokemon"])
 
 
 @router.get("", response_model=PokemonListSchema)
 async def list_pokemons(
+    request: Request,
     offset: int = 0,
     limit: int = 20,
     session=Depends(get_session),
 ) -> PokemonListSchema:
-    return await get_pokemon_list(session, offset, limit)
+    return await get_pokemon_list(session, offset, limit, request)
 
 
 @router.get(
@@ -25,9 +26,11 @@ async def list_pokemons(
         501: {"description": "Search by name is not implemented yet"},
     },
 )
-async def get_pokemon(id_or_name: str, session=Depends(get_session)) -> PokemonSchema:
+async def get_pokemon(
+    request: Request, id_or_name: str, session=Depends(get_session)
+) -> PokemonSchema:
     if id_or_name.isdigit():
-        pokemon = await get_pokemon_by_id(session, int(id_or_name))
+        pokemon = await get_pokemon_by_id(session, int(id_or_name), request)
         if pokemon is None:
             raise HTTPException(status_code=404, detail="Pokemon not found")
         return pokemon

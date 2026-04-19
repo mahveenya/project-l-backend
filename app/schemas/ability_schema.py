@@ -10,8 +10,8 @@ class AbilityNamedAPIResourceSchema(NamedAPIResourceSchema):
         return ResourceTypes.ABILITY
 
     @classmethod
-    def from_model(cls, model):
-        return super().from_model(model)
+    def from_model(cls, model, base_url):
+        return super().from_model(model, base_url)
 
 
 class AbilitySchema(BaseSchema):

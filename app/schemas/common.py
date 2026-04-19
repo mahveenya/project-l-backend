@@ -17,8 +17,8 @@ class NamedAPIResourceSchema(BaseSchema, ABC):
         pass
 
     @classmethod
-    def from_model(cls, model):
+    def from_model(cls, model, base_url):
         return cls(
             name=model.name,
-            url=f"/{cls.get_resource_type()}/{model.id}",
+            url=f"{base_url}{cls.get_resource_type()}/{model.id}",
         )

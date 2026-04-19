@@ -1,4 +1,3 @@
-from app.constants import Endpoints
 from app.repositories.ability_repository import get_ability_db_models_by_pokemon_id
 from app.repositories.pokemon_repository import (
     count_pokemon_db_models,
@@ -14,18 +13,18 @@ from app.schemas.pokemon_schema import (
 from app.utils.pagination import build_pagination
 
 
-async def get_pokemon_list(session, offset, limit) -> PokemonListSchema:
+async def get_pokemon_list(session, offset, limit, request) -> PokemonListSchema:
     pokemons = await get_pokemon_db_models(session, offset, limit)
     if not pokemons:
         return PokemonListSchema(count=0, next=None, previous=None, results=[])
 
     total = await count_pokemon_db_models(session)
 
-    results = [PokemonNamedAPIResourceSchema.from_model(p) for p in pokemons]
+    results = [
+        PokemonNamedAPIResourceSchema.from_model(p, request.base_url) for p in pokemons
+    ]
 
-    next_url, previous_url = build_pagination(
-        Endpoints.POKEMON_BASE, total, offset, limit
-    )
+    next_url, previous_url = build_pagination(request.base_url, total, offset, limit)
 
     return PokemonListSchema(
         count=total,
@@ -35,14 +34,14 @@ async def get_pokemon_list(session, offset, limit) -> PokemonListSchema:
     )
 
 
-async def get_pokemon_by_id(session, pokemon_id) -> PokemonSchema | None:
+async def get_pokemon_by_id(session, pokemon_id, request) -> PokemonSchema | None:
     pokemon = await get_pokemon_db_model_by_id(session, pokemon_id)
     if not pokemon:
         return None
 
     abilities = await get_ability_db_models_by_pokemon_id(session, pokemon_id)
     abilities_resources = [
-        AbilityNamedAPIResourceSchema.from_model(a) for a in abilities
+        AbilityNamedAPIResourceSchema.from_model(a, request.base_url) for a in abilities
     ]
     abilities_info = AbilityInfoSchema.from_resources(abilities_resources)
     return PokemonSchema(
