@@ -1,3 +1,4 @@
+from app.constants import Endpoints
 from app.repositories.ability_repository import get_ability_db_models_by_pokemon_id
 from app.repositories.pokemon_repository import (
     count_pokemon_db_models,
@@ -10,19 +11,18 @@ from app.schemas.pokemon_schema import (
     PokemonListSchema,
     PokemonSchema,
 )
-from app.utils.helpers import build_pagination
+from app.utils.helpers import build_base_url, build_pagination
 
 
-async def get_pokemon_list(session, offset, limit, base_url) -> PokemonListSchema:
+async def get_pokemon_list(session, offset, limit, request) -> PokemonListSchema:
     pokemons = await get_pokemon_db_models(session, offset, limit)
     if not pokemons:
         return PokemonListSchema(count=0, next=None, previous=None, results=[])
 
+    pokemon_base_url = f"{build_base_url(request)}{Endpoints.POKEMON_BASE}"
     total = await count_pokemon_db_models(session)
-
-    results = [NamedAPIResourceSchema.from_model(p, base_url) for p in pokemons]
-
-    next_url, previous_url = build_pagination(base_url, total, offset, limit)
+    results = [NamedAPIResourceSchema.from_model(p, pokemon_base_url) for p in pokemons]
+    next_url, previous_url = build_pagination(pokemon_base_url, total, offset, limit)
 
     return PokemonListSchema(
         count=total,
@@ -32,16 +32,18 @@ async def get_pokemon_list(session, offset, limit, base_url) -> PokemonListSchem
     )
 
 
-async def get_pokemon_by_id(session, pokemon_id, base_url) -> PokemonSchema | None:
+async def get_pokemon_by_id(session, pokemon_id, request) -> PokemonSchema | None:
     pokemon = await get_pokemon_db_model_by_id(session, pokemon_id)
     if not pokemon:
         return None
 
+    ability_base_url = f"{build_base_url(request)}{Endpoints.ABILITY_BASE}"
     abilities = await get_ability_db_models_by_pokemon_id(session, pokemon_id)
     abilities_resources = [
-        NamedAPIResourceSchema.from_model(a, base_url) for a in abilities
+        NamedAPIResourceSchema.from_model(a, ability_base_url) for a in abilities
     ]
     abilities_info = AbilityInfoSchema.from_resources(abilities_resources)
+
     return PokemonSchema(
         id=pokemon_id,
         name=pokemon.name,
